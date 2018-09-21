@@ -216,6 +216,9 @@
             this.Controls.Add(this.btnsave);
             this.Controls.Add(this.btnload);
             this.Controls.Add(this.treeview);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ManagedBookmarks";
             this.Text = "ManagedBookmarks";
             this.ResumeLayout(false);
