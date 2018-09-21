@@ -257,11 +257,18 @@ namespace ManagedBookmarks
         {
             if (treeview.SelectedNode != null)
             {
-                this.laststate = treeview.Nodes;
+                if (treeview.SelectedNode.Text != "root")
+                {
+                    this.laststate = treeview.Nodes;
 
-                treeview.Nodes.Remove(treeview.SelectedNode);
-                treeview.SelectedNode = null;
-                updateLiveOutput();
+                    treeview.Nodes.Remove(treeview.SelectedNode);
+                    treeview.SelectedNode = null;
+                    updateLiveOutput();
+                }
+                else
+                {
+                    MessageBox.Show("Can't remove root directory", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
 
@@ -292,8 +299,16 @@ namespace ManagedBookmarks
             }
             else
             {
-                treeview.SelectedNode.Text = txtname.Text;
-                ((BookmarkTag)treeview.SelectedNode.Tag).url = txturl.Text;
+                if (txtname.Text != "root")
+                {
+                    treeview.SelectedNode.Text = txtname.Text;
+                    ((BookmarkTag)treeview.SelectedNode.Tag).url = txturl.Text;
+                }
+                else
+                {
+                    MessageBox.Show("Name cannot be root", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
                 chkfolder.Enabled = true;
                 chkfolder.Checked = false;
                 treeview.Enabled = true;
