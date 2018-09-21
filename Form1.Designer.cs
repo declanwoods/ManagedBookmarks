@@ -38,10 +38,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.rtbout = new System.Windows.Forms.RichTextBox();
+            this.txtcurrfile = new System.Windows.Forms.TextBox();
+            this.btnadd = new System.Windows.Forms.Button();
+            this.btnremove = new System.Windows.Forms.Button();
+            this.btnmodify = new System.Windows.Forms.Button();
+            this.btncopyall = new System.Windows.Forms.Button();
+            this.btnundo = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // treeview
             // 
+            this.treeview.HideSelection = false;
             this.treeview.Location = new System.Drawing.Point(12, 39);
             this.treeview.Name = "treeview";
             this.treeview.Size = new System.Drawing.Size(417, 427);
@@ -55,6 +62,7 @@
             this.btnload.TabIndex = 1;
             this.btnload.Text = "Load";
             this.btnload.UseVisualStyleBackColor = true;
+            this.btnload.Click += new System.EventHandler(this.btnload_Click);
             // 
             // btnsave
             // 
@@ -64,6 +72,7 @@
             this.btnsave.TabIndex = 2;
             this.btnsave.Text = "Save";
             this.btnsave.UseVisualStyleBackColor = true;
+            this.btnsave.Click += new System.EventHandler(this.btnsave_Click);
             // 
             // chkfolder
             // 
@@ -74,6 +83,7 @@
             this.chkfolder.TabIndex = 4;
             this.chkfolder.Text = "Folder?";
             this.chkfolder.UseVisualStyleBackColor = true;
+            this.chkfolder.Click += new System.EventHandler(this.chkfolder_Click);
             // 
             // label1
             // 
@@ -90,6 +100,7 @@
             this.txtname.Name = "txtname";
             this.txtname.Size = new System.Drawing.Size(127, 20);
             this.txtname.TabIndex = 6;
+            this.txtname.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtname_Changed);
             // 
             // txturl
             // 
@@ -97,6 +108,7 @@
             this.txturl.Name = "txturl";
             this.txturl.Size = new System.Drawing.Size(211, 20);
             this.txturl.TabIndex = 8;
+            this.txturl.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txturl_Changed);
             // 
             // label2
             // 
@@ -110,7 +122,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(432, 22);
+            this.label3.Location = new System.Drawing.Point(435, 17);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(62, 13);
             this.label3.TabIndex = 9;
@@ -121,15 +133,79 @@
             this.rtbout.Location = new System.Drawing.Point(435, 39);
             this.rtbout.Name = "rtbout";
             this.rtbout.ReadOnly = true;
-            this.rtbout.Size = new System.Drawing.Size(436, 469);
+            this.rtbout.Size = new System.Drawing.Size(436, 471);
             this.rtbout.TabIndex = 10;
             this.rtbout.Text = "";
+            // 
+            // txtcurrfile
+            // 
+            this.txtcurrfile.Location = new System.Drawing.Point(175, 14);
+            this.txtcurrfile.Name = "txtcurrfile";
+            this.txtcurrfile.Size = new System.Drawing.Size(254, 20);
+            this.txtcurrfile.TabIndex = 11;
+            // 
+            // btnadd
+            // 
+            this.btnadd.Location = new System.Drawing.Point(15, 517);
+            this.btnadd.Name = "btnadd";
+            this.btnadd.Size = new System.Drawing.Size(75, 23);
+            this.btnadd.TabIndex = 12;
+            this.btnadd.Text = "Add";
+            this.btnadd.UseVisualStyleBackColor = true;
+            this.btnadd.Click += new System.EventHandler(this.btnadd_Click);
+            // 
+            // btnremove
+            // 
+            this.btnremove.Location = new System.Drawing.Point(96, 517);
+            this.btnremove.Name = "btnremove";
+            this.btnremove.Size = new System.Drawing.Size(75, 23);
+            this.btnremove.TabIndex = 13;
+            this.btnremove.Text = "Remove";
+            this.btnremove.UseVisualStyleBackColor = true;
+            this.btnremove.Click += new System.EventHandler(this.btnremove_Click);
+            // 
+            // btnmodify
+            // 
+            this.btnmodify.Location = new System.Drawing.Point(177, 517);
+            this.btnmodify.Name = "btnmodify";
+            this.btnmodify.Size = new System.Drawing.Size(75, 23);
+            this.btnmodify.TabIndex = 14;
+            this.btnmodify.Text = "Modify";
+            this.btnmodify.UseVisualStyleBackColor = true;
+            this.btnmodify.Click += new System.EventHandler(this.btnmodify_Click);
+            // 
+            // btncopyall
+            // 
+            this.btncopyall.Location = new System.Drawing.Point(435, 517);
+            this.btncopyall.Name = "btncopyall";
+            this.btncopyall.Size = new System.Drawing.Size(436, 23);
+            this.btncopyall.TabIndex = 15;
+            this.btncopyall.Text = "Copy All";
+            this.btncopyall.UseVisualStyleBackColor = true;
+            this.btncopyall.Click += new System.EventHandler(this.btncopyall_Click);
+            // 
+            // btnundo
+            // 
+            this.btnundo.Enabled = false;
+            this.btnundo.Location = new System.Drawing.Point(325, 517);
+            this.btnundo.Name = "btnundo";
+            this.btnundo.Size = new System.Drawing.Size(104, 23);
+            this.btnundo.TabIndex = 16;
+            this.btnundo.Text = "Undo Last Action";
+            this.btnundo.UseVisualStyleBackColor = true;
+            this.btnundo.Click += new System.EventHandler(this.btnundo_Click);
             // 
             // ManagedBookmarks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(883, 520);
+            this.ClientSize = new System.Drawing.Size(883, 549);
+            this.Controls.Add(this.btnundo);
+            this.Controls.Add(this.btncopyall);
+            this.Controls.Add(this.btnmodify);
+            this.Controls.Add(this.btnremove);
+            this.Controls.Add(this.btnadd);
+            this.Controls.Add(this.txtcurrfile);
             this.Controls.Add(this.rtbout);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txturl);
@@ -159,6 +235,12 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.RichTextBox rtbout;
+        private System.Windows.Forms.TextBox txtcurrfile;
+        private System.Windows.Forms.Button btnadd;
+        private System.Windows.Forms.Button btnremove;
+        private System.Windows.Forms.Button btnmodify;
+        private System.Windows.Forms.Button btncopyall;
+        private System.Windows.Forms.Button btnundo;
     }
 }
 

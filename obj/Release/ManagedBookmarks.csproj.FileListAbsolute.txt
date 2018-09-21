@@ -1,0 +1,11 @@
+C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\bin\Release\ManagedBookmarks.exe.config
+C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\bin\Release\ManagedBookmarks.exe
+C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\bin\Release\ManagedBookmarks.pdb
+C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\bin\Release\Newtonsoft.Json.dll
+C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\bin\Release\Newtonsoft.Json.xml
+C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\obj\Release\ManagedBookmarks.ManagedBookmarks.resources
+C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\obj\Release\ManagedBookmarks.Properties.Resources.resources
+C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\obj\Release\ManagedBookmarks.csproj.GenerateResource.Cache
+C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\obj\Release\ManagedBookmarks.exe
+C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\obj\Release\ManagedBookmarks.pdb
+C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\obj\Release\ManagedBookmarks.csprojResolveAssemblyReference.cache
