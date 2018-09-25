@@ -128,6 +128,14 @@ namespace ManagedBookmarks
 
         private void btnload_Click(object sender, EventArgs e)
         {
+            if (treeview.Nodes.Count != 0)
+            {
+                DialogResult sure = MessageBox.Show("Are you sure you want to open a new file? \n\nAll unsaved changes will be lost!", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (sure == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
             OpenFileDialog of = new OpenFileDialog();
             DialogResult dr = of.ShowDialog();
             if (dr == DialogResult.OK && !of.FileName.Equals(""))
@@ -296,6 +304,11 @@ namespace ManagedBookmarks
                     }
                     btnmodify.Text = "Confirm";
                 }
+                else
+                {
+                    MessageBox.Show("Cannot modify root", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
             }
             else
             {
@@ -345,6 +358,20 @@ namespace ManagedBookmarks
                 laststate = templaststate;
                 updateLiveOutput();
             }
+        }
+
+        private void btnnew_Click(object sender, EventArgs e)
+        {
+            if (treeview.Nodes.Count != 0)
+            {
+                DialogResult dr = MessageBox.Show("Are you sure you want to start new? \n\nAll unsaved changes will be lost!", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (dr == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
+            currFileName = "";
+            convertJsonToTreenode("[]");
         }
     }
 

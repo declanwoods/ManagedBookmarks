@@ -44,6 +44,7 @@
             this.btnmodify = new System.Windows.Forms.Button();
             this.btncopyall = new System.Windows.Forms.Button();
             this.btnundo = new System.Windows.Forms.Button();
+            this.btnnew = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // treeview
@@ -56,7 +57,7 @@
             // 
             // btnload
             // 
-            this.btnload.Location = new System.Drawing.Point(12, 12);
+            this.btnload.Location = new System.Drawing.Point(92, 10);
             this.btnload.Name = "btnload";
             this.btnload.Size = new System.Drawing.Size(75, 23);
             this.btnload.TabIndex = 1;
@@ -66,7 +67,7 @@
             // 
             // btnsave
             // 
-            this.btnsave.Location = new System.Drawing.Point(93, 12);
+            this.btnsave.Location = new System.Drawing.Point(172, 10);
             this.btnsave.Name = "btnsave";
             this.btnsave.Size = new System.Drawing.Size(75, 23);
             this.btnsave.TabIndex = 2;
@@ -139,9 +140,9 @@
             // 
             // txtcurrfile
             // 
-            this.txtcurrfile.Location = new System.Drawing.Point(175, 14);
+            this.txtcurrfile.Location = new System.Drawing.Point(253, 12);
             this.txtcurrfile.Name = "txtcurrfile";
-            this.txtcurrfile.Size = new System.Drawing.Size(254, 20);
+            this.txtcurrfile.Size = new System.Drawing.Size(176, 20);
             this.txtcurrfile.TabIndex = 11;
             // 
             // btnadd
@@ -195,11 +196,22 @@
             this.btnundo.UseVisualStyleBackColor = true;
             this.btnundo.Click += new System.EventHandler(this.btnundo_Click);
             // 
+            // btnnew
+            // 
+            this.btnnew.Location = new System.Drawing.Point(12, 10);
+            this.btnnew.Name = "btnnew";
+            this.btnnew.Size = new System.Drawing.Size(75, 23);
+            this.btnnew.TabIndex = 17;
+            this.btnnew.Text = "New";
+            this.btnnew.UseVisualStyleBackColor = true;
+            this.btnnew.Click += new System.EventHandler(this.btnnew_Click);
+            // 
             // ManagedBookmarks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(883, 549);
+            this.Controls.Add(this.btnnew);
             this.Controls.Add(this.btnundo);
             this.Controls.Add(this.btncopyall);
             this.Controls.Add(this.btnmodify);
@@ -244,6 +256,7 @@
         private System.Windows.Forms.Button btnmodify;
         private System.Windows.Forms.Button btncopyall;
         private System.Windows.Forms.Button btnundo;
+        private System.Windows.Forms.Button btnnew;
     }
 }
 
