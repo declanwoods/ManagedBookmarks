@@ -45,6 +45,8 @@
             this.btncopyall = new System.Windows.Forms.Button();
             this.btnundo = new System.Windows.Forms.Button();
             this.btnnew = new System.Windows.Forms.Button();
+            this.btncopyallunformatted = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // treeview
@@ -179,7 +181,7 @@
             // 
             this.btncopyall.Location = new System.Drawing.Point(435, 517);
             this.btncopyall.Name = "btncopyall";
-            this.btncopyall.Size = new System.Drawing.Size(436, 23);
+            this.btncopyall.Size = new System.Drawing.Size(215, 23);
             this.btncopyall.TabIndex = 15;
             this.btncopyall.Text = "Copy All";
             this.btncopyall.UseVisualStyleBackColor = true;
@@ -188,7 +190,7 @@
             // btnundo
             // 
             this.btnundo.Enabled = false;
-            this.btnundo.Location = new System.Drawing.Point(325, 517);
+            this.btnundo.Location = new System.Drawing.Point(295, 517);
             this.btnundo.Name = "btnundo";
             this.btnundo.Size = new System.Drawing.Size(104, 23);
             this.btnundo.TabIndex = 16;
@@ -206,11 +208,32 @@
             this.btnnew.UseVisualStyleBackColor = true;
             this.btnnew.Click += new System.EventHandler(this.btnnew_Click);
             // 
+            // btncopyallunformatted
+            // 
+            this.btncopyallunformatted.Location = new System.Drawing.Point(656, 517);
+            this.btncopyallunformatted.Name = "btncopyallunformatted";
+            this.btncopyallunformatted.Size = new System.Drawing.Size(215, 23);
+            this.btncopyallunformatted.TabIndex = 18;
+            this.btncopyallunformatted.Text = "Copy All Unformatted";
+            this.btncopyallunformatted.UseVisualStyleBackColor = true;
+            this.btncopyallunformatted.Click += new System.EventHandler(this.btncopyallunformatted_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(402, 525);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(28, 13);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "v1.2";
+            // 
             // ManagedBookmarks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(883, 549);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.btncopyallunformatted);
             this.Controls.Add(this.btnnew);
             this.Controls.Add(this.btnundo);
             this.Controls.Add(this.btncopyall);
@@ -257,6 +280,8 @@
         private System.Windows.Forms.Button btncopyall;
         private System.Windows.Forms.Button btnundo;
         private System.Windows.Forms.Button btnnew;
+        private System.Windows.Forms.Button btncopyallunformatted;
+        private System.Windows.Forms.Label label4;
     }
 }
 

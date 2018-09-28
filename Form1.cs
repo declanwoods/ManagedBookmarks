@@ -149,19 +149,22 @@ namespace ManagedBookmarks
 
         private void btnsave_Click(object sender, EventArgs e)
         {
-            List<TreeNode> nodes = new List<TreeNode>();
-            foreach (TreeNode t in treeview.Nodes[0].Nodes)
+            if (treeview.Nodes.Count > 0)
             {
-                nodes.Add(t);
-            }
-            List<Object> output = outputObject(nodes);
-            string json = JsonConvert.SerializeObject(output);
-            SaveFileDialog savedialog = new SaveFileDialog();
-            savedialog.InitialDirectory = this.currFileName;
-            DialogResult dr = savedialog.ShowDialog();
-            if (dr == DialogResult.OK && !savedialog.FileName.Equals(""))
-            {
-                File.WriteAllText(savedialog.FileName, json);
+                List<TreeNode> nodes = new List<TreeNode>();
+                foreach (TreeNode t in treeview.Nodes[0].Nodes)
+                {
+                    nodes.Add(t);
+                }
+                List<Object> output = outputObject(nodes);
+                string json = JsonConvert.SerializeObject(output);
+                SaveFileDialog savedialog = new SaveFileDialog();
+                savedialog.InitialDirectory = this.currFileName;
+                DialogResult dr = savedialog.ShowDialog();
+                if (dr == DialogResult.OK && !savedialog.FileName.Equals(""))
+                {
+                    File.WriteAllText(savedialog.FileName, json);
+                }
             }
         }
 
@@ -182,167 +185,200 @@ namespace ManagedBookmarks
 
         private void btnadd_Click(object sender, EventArgs e)
         {
-            TreeNode selected = treeview.SelectedNode;
-            string name = txtname.Text;
-            string url = txturl.Text;
-
-            if (name != "root" && name != "")
+            if (treeview.Nodes.Count > 0)
             {
-                if (chkfolder.Checked)
+                TreeNode selected = treeview.SelectedNode;
+                string name = txtname.Text;
+                string url = txturl.Text;
+
+                if (name != "root" && name != "")
                 {
-                    // Folder
-                    if (((BookmarkTag)selected.Tag).url == null)
+                    if (chkfolder.Checked)
                     {
-                        TreeNode newNode = new TreeNode();
-                        newNode.Text = name;
-
-                        BookmarkTag tag = new BookmarkTag();
-                        tag.id = currid++;
-                        tag.url = null;
-                        newNode.Tag = tag;
-
-                        TreeNode emptyNode = new TreeNode();
-                        emptyNode.Text = "<Empty>";
-                        BookmarkTag emptytag = new BookmarkTag();
-                        emptytag.url = "";
-                        emptytag.id = currid++;
-                        emptyNode.Tag = emptytag;
-                        newNode.Nodes.Add(emptyNode);
-
-                        if (selected.Nodes.Count == 1)
+                        // Folder
+                        if (((BookmarkTag)selected.Tag).url == null)
                         {
-                            if (selected.Nodes[0].Text == "<Empty>")
+                            TreeNode newNode = new TreeNode();
+                            newNode.Text = name;
+
+                            BookmarkTag tag = new BookmarkTag();
+                            tag.id = currid++;
+                            tag.url = null;
+                            newNode.Tag = tag;
+
+                            TreeNode emptyNode = new TreeNode();
+                            emptyNode.Text = "<Empty>";
+                            BookmarkTag emptytag = new BookmarkTag();
+                            emptytag.url = "";
+                            emptytag.id = currid++;
+                            emptyNode.Tag = emptytag;
+                            newNode.Nodes.Add(emptyNode);
+
+                            if (selected.Nodes.Count == 1)
                             {
-                                selected.Nodes.Clear();
+                                if (selected.Nodes[0].Text == "<Empty>")
+                                {
+                                    selected.Nodes.Clear();
+                                }
+
                             }
+                            newNode.ExpandAll();
+                            selected.Nodes.Add(newNode);
 
                         }
-
-                        selected.Nodes.Add(newNode);
-
+                        else
+                        {
+                            MessageBox.Show("Can't add a bookmark to a non-folder", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Can't add a bookmark to a non-folder", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        // Bookmark
+                        if (((BookmarkTag)selected.Tag).url == null)
+                        {
+                            TreeNode newNode = new TreeNode();
+                            newNode.Text = name;
+
+                            BookmarkTag tag = new BookmarkTag();
+                            tag.id = currid++;
+                            tag.url = url;
+                            newNode.Tag = tag;
+                            if (selected.Nodes.Count == 1)
+                            {
+                                if (selected.Nodes[0].Text == "<Empty>")
+                                {
+                                    selected.Nodes.Clear();
+                                }
+
+                            }
+                            selected.Nodes.Add(newNode);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Can't add a bookmark to a non-folder", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
                     }
                 }
                 else
                 {
-                    // Bookmark
-                    if (((BookmarkTag)selected.Tag).url == null)
-                    {
-                        TreeNode newNode = new TreeNode();
-                        newNode.Text = name;
-
-                        BookmarkTag tag = new BookmarkTag();
-                        tag.id = currid++;
-                        tag.url = url;
-                        newNode.Tag = tag;
-                        if (selected.Nodes.Count == 1)
-                        {
-                            if (selected.Nodes[0].Text == "<Empty>")
-                            {
-                                selected.Nodes.Clear();
-                            }
-
-                        }
-                        selected.Nodes.Add(newNode);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Can't add a bookmark to a non-folder", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    MessageBox.Show("Name cannot be root or blank", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                updateLiveOutput();
             }
-            else
-            {
-                MessageBox.Show("Name cannot be root or blank", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            updateLiveOutput();
         }
 
         private void btnremove_Click(object sender, EventArgs e)
         {
-            if (treeview.SelectedNode != null)
+            if (treeview.Nodes.Count > 0)
             {
-                if (treeview.SelectedNode.Text != "root")
+                if (treeview.SelectedNode != null)
                 {
-                    this.laststate = treeview.Nodes;
+                    if (treeview.SelectedNode.Text != "root")
+                    {
+                        this.laststate = treeview.Nodes;
 
-                    treeview.Nodes.Remove(treeview.SelectedNode);
-                    treeview.SelectedNode = null;
-                    updateLiveOutput();
-                }
-                else
-                {
-                    MessageBox.Show("Can't remove root directory", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        treeview.Nodes.Remove(treeview.SelectedNode);
+                        treeview.SelectedNode = null;
+                        updateLiveOutput();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Can't remove root directory", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
             }
         }
 
         private void btnmodify_Click(object sender, EventArgs e)
         {
-            if (treeview.Enabled)
+            if (treeview.Nodes.Count > 0)
             {
-                if (treeview.SelectedNode.Text != "root")
+                if (treeview.Enabled)
                 {
-                    chkfolder.Enabled = false;
-                    treeview.Enabled = false;
-                    btnadd.Enabled = false;
-                    btnremove.Enabled = false;
-                    txtname.Text = treeview.SelectedNode.Text;
-                    BookmarkTag tag = (BookmarkTag)treeview.SelectedNode.Tag;
-                    Debug.WriteLine(tag.url);
-                    if (tag.url == null)
+                    if (treeview.SelectedNode.Text != "root")
                     {
-                        txturl.Enabled = false;
-                        chkfolder.Checked = true;
+                        chkfolder.Enabled = false;
+                        treeview.Enabled = false;
+                        btnadd.Enabled = false;
+                        btnremove.Enabled = false;
+                        txtname.Text = treeview.SelectedNode.Text;
+                        BookmarkTag tag = (BookmarkTag)treeview.SelectedNode.Tag;
+                        Debug.WriteLine(tag.url);
+                        if (tag.url == null)
+                        {
+                            txturl.Enabled = false;
+                            chkfolder.Checked = true;
+                        }
+                        else
+                        {
+                            txturl.Text = tag.url;
+                        }
+                        btnmodify.Text = "Confirm";
                     }
                     else
                     {
-                        txturl.Text = tag.url;
+                        MessageBox.Show("Cannot modify root", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
                     }
-                    btnmodify.Text = "Confirm";
                 }
                 else
                 {
-                    MessageBox.Show("Cannot modify root", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
+                    if (txtname.Text != "root")
+                    {
+                        treeview.SelectedNode.Text = txtname.Text;
+                        if (((BookmarkTag)treeview.SelectedNode.Tag).url != null)
+                        {
+                            ((BookmarkTag)treeview.SelectedNode.Tag).url = txturl.Text;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Name cannot be root", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    chkfolder.Enabled = true;
+                    chkfolder.Checked = false;
+                    treeview.Enabled = true;
+                    txtname.Text = "";
+                    txturl.Enabled = true;
+                    txturl.Text = "";
+                    btnadd.Enabled = true;
+                    btnremove.Enabled = true;
+                    btnmodify.Text = "Modify";
                 }
+                updateLiveOutput();
             }
-            else
-            {
-                if (txtname.Text != "root")
-                {
-                    treeview.SelectedNode.Text = txtname.Text;
-                    ((BookmarkTag)treeview.SelectedNode.Tag).url = txturl.Text;
-                }
-                else
-                {
-                    MessageBox.Show("Name cannot be root", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-                chkfolder.Enabled = true;
-                chkfolder.Checked = false;
-                treeview.Enabled = true;
-                txtname.Text = "";
-                txturl.Enabled = true;
-                txturl.Text = "";
-                btnadd.Enabled = true;
-                btnremove.Enabled = true;
-                btnmodify.Text = "Modify";
-            }
-            updateLiveOutput();
         }
 
         private void btncopyall_Click(object sender, EventArgs e)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (string line in rtbout.Lines)
+            if (treeview.Nodes.Count > 0)
             {
-                sb.AppendLine(line);
+                StringBuilder sb = new StringBuilder();
+                foreach (string line in rtbout.Lines)
+                {
+                    sb.AppendLine(line);
+                }
+                Clipboard.SetText(sb.ToString());
             }
-            Clipboard.SetText(sb.ToString());
+        }
+
+        private void btncopyallunformatted_Click(object sender, EventArgs e)
+        {
+            if (treeview.Nodes.Count > 0)
+            {
+                List<TreeNode> nodes = new List<TreeNode>();
+                foreach (TreeNode t in treeview.Nodes[0].Nodes)
+                {
+                    nodes.Add(t);
+                }
+                List<Object> output = outputObject(nodes);
+                Debug.WriteLine(output);
+                string json = JsonConvert.SerializeObject(output, Formatting.None);
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine(json);
+                Clipboard.SetText(sb.ToString());
+            }
         }
 
         private void btnundo_Click(object sender, EventArgs e)

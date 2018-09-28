@@ -8,4 +8,3 @@ C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBo
 C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\obj\Release\ManagedBookmarks.csproj.GenerateResource.Cache
 C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\obj\Release\ManagedBookmarks.exe
 C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\obj\Release\ManagedBookmarks.pdb
-C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\obj\Release\ManagedBookmarks.csprojResolveAssemblyReference.cache
