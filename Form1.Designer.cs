@@ -47,15 +47,20 @@
             this.btnnew = new System.Windows.Forms.Button();
             this.btncopyallunformatted = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnhelp = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // treeview
             // 
+            this.treeview.AllowDrop = true;
             this.treeview.HideSelection = false;
             this.treeview.Location = new System.Drawing.Point(12, 39);
             this.treeview.Name = "treeview";
             this.treeview.Size = new System.Drawing.Size(417, 427);
             this.treeview.TabIndex = 0;
+            this.treeview.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeview_KeyDown);
+            this.treeview.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.treeview_KeyPress);
+            this.treeview.KeyUp += new System.Windows.Forms.KeyEventHandler(this.treeview_KeyUp);
             // 
             // btnload
             // 
@@ -190,11 +195,11 @@
             // btnundo
             // 
             this.btnundo.Enabled = false;
-            this.btnundo.Location = new System.Drawing.Point(295, 517);
+            this.btnundo.Location = new System.Drawing.Point(320, 517);
             this.btnundo.Name = "btnundo";
-            this.btnundo.Size = new System.Drawing.Size(104, 23);
+            this.btnundo.Size = new System.Drawing.Size(79, 23);
             this.btnundo.TabIndex = 16;
-            this.btnundo.Text = "Undo Last Action";
+            this.btnundo.Text = "Undo";
             this.btnundo.UseVisualStyleBackColor = true;
             this.btnundo.Click += new System.EventHandler(this.btnundo_Click);
             // 
@@ -225,13 +230,24 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(28, 13);
             this.label4.TabIndex = 19;
-            this.label4.Text = "v1.2";
+            this.label4.Text = "v1.3";
+            // 
+            // btnhelp
+            // 
+            this.btnhelp.Location = new System.Drawing.Point(814, 12);
+            this.btnhelp.Name = "btnhelp";
+            this.btnhelp.Size = new System.Drawing.Size(57, 23);
+            this.btnhelp.TabIndex = 20;
+            this.btnhelp.Text = "Help";
+            this.btnhelp.UseVisualStyleBackColor = true;
+            this.btnhelp.Click += new System.EventHandler(this.btnhelp_Click);
             // 
             // ManagedBookmarks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(883, 549);
+            this.Controls.Add(this.btnhelp);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btncopyallunformatted);
             this.Controls.Add(this.btnnew);
@@ -252,6 +268,7 @@
             this.Controls.Add(this.btnload);
             this.Controls.Add(this.treeview);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ManagedBookmarks";
@@ -282,6 +299,7 @@
         private System.Windows.Forms.Button btnnew;
         private System.Windows.Forms.Button btncopyallunformatted;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnhelp;
     }
 }
 

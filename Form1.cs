@@ -18,6 +18,8 @@ namespace ManagedBookmarks
         private string currFileName = null;
         private int currid = 0;
         private TreeNodeCollection laststate = null;
+        private bool moving = false;
+        private Keys lastcode;
 
         public ManagedBookmarks()
         {
@@ -191,71 +193,74 @@ namespace ManagedBookmarks
                 string name = txtname.Text;
                 string url = txturl.Text;
 
-                if (name != "root" && name != "")
+                if (selected != null)
                 {
-                    if (chkfolder.Checked)
+                    if (name != "root" && name != "")
                     {
-                        // Folder
-                        if (((BookmarkTag)selected.Tag).url == null)
+                        if (chkfolder.Checked)
                         {
-                            TreeNode newNode = new TreeNode();
-                            newNode.Text = name;
-
-                            BookmarkTag tag = new BookmarkTag();
-                            tag.id = currid++;
-                            tag.url = null;
-                            newNode.Tag = tag;
-
-                            TreeNode emptyNode = new TreeNode();
-                            emptyNode.Text = "<Empty>";
-                            BookmarkTag emptytag = new BookmarkTag();
-                            emptytag.url = "";
-                            emptytag.id = currid++;
-                            emptyNode.Tag = emptytag;
-                            newNode.Nodes.Add(emptyNode);
-
-                            if (selected.Nodes.Count == 1)
+                            // Folder
+                            if (((BookmarkTag)selected.Tag).url == null)
                             {
-                                if (selected.Nodes[0].Text == "<Empty>")
+                                TreeNode newNode = new TreeNode();
+                                newNode.Text = name;
+
+                                BookmarkTag tag = new BookmarkTag();
+                                tag.id = currid++;
+                                tag.url = null;
+                                newNode.Tag = tag;
+
+                                TreeNode emptyNode = new TreeNode();
+                                emptyNode.Text = "<Empty>";
+                                BookmarkTag emptytag = new BookmarkTag();
+                                emptytag.url = "";
+                                emptytag.id = currid++;
+                                emptyNode.Tag = emptytag;
+                                newNode.Nodes.Add(emptyNode);
+
+                                if (selected.Nodes.Count == 1)
                                 {
-                                    selected.Nodes.Clear();
+                                    if (selected.Nodes[0].Text == "<Empty>")
+                                    {
+                                        selected.Nodes.Clear();
+                                    }
+
                                 }
+                                newNode.ExpandAll();
+                                selected.Nodes.Add(newNode);
 
                             }
-                            newNode.ExpandAll();
-                            selected.Nodes.Add(newNode);
-
+                            else
+                            {
+                                MessageBox.Show("Can't add a bookmark to a non-folder", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
                         else
                         {
-                            MessageBox.Show("Can't add a bookmark to a non-folder", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                    else
-                    {
-                        // Bookmark
-                        if (((BookmarkTag)selected.Tag).url == null)
-                        {
-                            TreeNode newNode = new TreeNode();
-                            newNode.Text = name;
-
-                            BookmarkTag tag = new BookmarkTag();
-                            tag.id = currid++;
-                            tag.url = url;
-                            newNode.Tag = tag;
-                            if (selected.Nodes.Count == 1)
+                            // Bookmark
+                            if (((BookmarkTag)selected.Tag).url == null)
                             {
-                                if (selected.Nodes[0].Text == "<Empty>")
-                                {
-                                    selected.Nodes.Clear();
-                                }
+                                TreeNode newNode = new TreeNode();
+                                newNode.Text = name;
 
+                                BookmarkTag tag = new BookmarkTag();
+                                tag.id = currid++;
+                                tag.url = url;
+                                newNode.Tag = tag;
+                                if (selected.Nodes.Count == 1)
+                                {
+                                    if (selected.Nodes[0].Text == "<Empty>")
+                                    {
+                                        selected.Nodes.Clear();
+                                    }
+
+                                }
+                                selected.Nodes.Add(newNode);
                             }
-                            selected.Nodes.Add(newNode);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Can't add a bookmark to a non-folder", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            else
+                            {
+                                MessageBox.Show("Can't add a bookmark to a non-folder", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
                     }
                 }
@@ -408,6 +413,150 @@ namespace ManagedBookmarks
             }
             currFileName = "";
             convertJsonToTreenode("[]");
+        }
+
+        private void moveTreeNodeDown(TreeNode node)
+        {
+            TreeNode parent = node.Parent;
+            if (parent != null)
+            {
+                int index = parent.Nodes.IndexOf(node);
+                if (index < parent.Nodes.Count - 1)
+                {
+                    parent.Nodes.RemoveAt(index);
+                    if (((BookmarkTag)parent.Nodes[index].Tag).url == null)
+                    {
+                        // Move up into folder
+                        parent.Nodes[index].Nodes.Insert(0, node);
+                    }
+                    else
+                    {
+                        // Normal
+                        parent.Nodes.Insert(index + 1, node);
+                    }
+                    treeview.SelectedNode = node;
+                }
+                else
+                {
+                    // Move up out of folder
+                    TreeNode parentParent = parent.Parent;
+                    if (parentParent != null)
+                    {
+                        int folderIndex = parentParent.Nodes.IndexOf(parent);
+                        parent.Nodes.RemoveAt(index);
+                        parentParent.Nodes.Insert(folderIndex+1, node);
+                        treeview.SelectedNode = node;
+                    }
+                }
+            }
+        }
+
+        private void moveTreeNodeUp(TreeNode node)
+        {
+            TreeNode parent = node.Parent;
+            if (parent != null)
+            {
+                int index = parent.Nodes.IndexOf(node);
+                if (index > 0)
+                {
+                    parent.Nodes.RemoveAt(index);
+                    if (((BookmarkTag)parent.Nodes[index-1].Tag).url == null)
+                    {
+                        // Move down into folder
+                        parent.Nodes[index-1].Nodes.Insert(parent.Nodes[index - 1].Nodes.Count, node);
+                    }
+                    else
+                    {
+                        // Normal down - same level
+                        parent.Nodes.Insert(index - 1, node);
+                    }
+                    treeview.SelectedNode = node;
+                }
+                else
+                {
+                    // Move down out of folder
+                    TreeNode parentParent = parent.Parent;
+                    if (parentParent != null)
+                    {
+                        int folderIndex = parentParent.Nodes.IndexOf(parent);
+                        parent.Nodes.RemoveAt(index);
+                        parentParent.Nodes.Insert(folderIndex, node);
+                        treeview.SelectedNode = node;
+                    }
+                }
+            }
+        }
+
+        private void treeview_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.ControlKey)
+            {
+                btnadd.Enabled = false;
+                btnremove.Enabled = false;
+                btnmodify.Enabled = false;
+                txtname.Enabled = false;
+                txturl.Enabled = false;
+                chkfolder.Enabled = false;
+                moving = true;
+            }
+        }
+
+        private void treeview_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.ControlKey)
+            {
+                btnadd.Enabled = true;
+                btnremove.Enabled = true;
+                btnmodify.Enabled = true;
+                txtname.Enabled = true;
+                txturl.Enabled = true;
+                chkfolder.Enabled = true;
+                moving = false;
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                if (treeview.SelectedNode != null && moving)
+                {
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                    TreeNode node = treeview.SelectedNode;
+                    moveTreeNodeDown(node);
+                    updateLiveOutput();
+                }
+            }
+            else if (e.KeyCode == Keys.Up)
+            {
+                if (treeview.SelectedNode != null && moving)
+                {
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                    TreeNode node = treeview.SelectedNode;
+                    moveTreeNodeUp(node);
+                    updateLiveOutput();
+                }
+            }
+        }
+
+        private void treeview_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (lastcode == Keys.Up || lastcode == Keys.Down)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void btnhelp_Click(object sender, EventArgs e)
+        {
+            FormCollection fc = Application.OpenForms;
+            foreach (Form form in fc)
+            {
+                if (form.GetType() == typeof(Info))
+                {
+                    return;
+                }
+            }
+            Info info = new Info();
+            info.Show();
         }
     }
 

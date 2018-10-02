@@ -9,3 +9,4 @@ c:\users\stwood\documents\visual studio 2015\Projects\ManagedBookmarks\ManagedBo
 c:\users\stwood\documents\visual studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\obj\Debug\ManagedBookmarks.pdb
 C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\bin\Debug\Newtonsoft.Json.dll
 C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\bin\Debug\Newtonsoft.Json.xml
+C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\obj\Debug\ManagedBookmarks.Info.resources
