@@ -195,13 +195,17 @@ namespace ManagedBookmarks
 
                 if (selected != null)
                 {
-                    if (name != "root" && name != "")
+                    if (name != "root" && name.Trim() != "" && name != "<Empty>")
                     {
                         if (chkfolder.Checked)
                         {
                             // Folder
-                            if (((BookmarkTag)selected.Tag).url == null)
+                            if (((BookmarkTag)selected.Tag).url == null || selected.Text == "<Empty>")
                             {
+                                if (selected.Text == "<Empty>")
+                                {
+                                    selected = selected.Parent;
+                                }
                                 TreeNode newNode = new TreeNode();
                                 newNode.Text = name;
 
@@ -228,7 +232,7 @@ namespace ManagedBookmarks
                                 }
                                 newNode.ExpandAll();
                                 selected.Nodes.Add(newNode);
-
+                                treeview.SelectedNode = newNode;
                             }
                             else
                             {
@@ -238,8 +242,12 @@ namespace ManagedBookmarks
                         else
                         {
                             // Bookmark
-                            if (((BookmarkTag)selected.Tag).url == null)
+                            if (((BookmarkTag)selected.Tag).url == null || selected.Text == "<Empty>")
                             {
+                                if (selected.Text == "<Empty>")
+                                {
+                                    selected = selected.Parent;
+                                }
                                 TreeNode newNode = new TreeNode();
                                 newNode.Text = name;
 
@@ -328,7 +336,7 @@ namespace ManagedBookmarks
                 }
                 else
                 {
-                    if (txtname.Text != "root")
+                    if (txtname.Text != "root" || txtname.Text != "<Empty>" || txtname.Text.Trim() != "")
                     {
                         treeview.SelectedNode.Text = txtname.Text;
                         if (((BookmarkTag)treeview.SelectedNode.Tag).url != null)
@@ -413,6 +421,7 @@ namespace ManagedBookmarks
             }
             currFileName = "";
             convertJsonToTreenode("[]");
+            treeview.SelectedNode = treeview.Nodes[0];
         }
 
         private void moveTreeNodeDown(TreeNode node)

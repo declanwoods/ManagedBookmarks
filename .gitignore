@@ -1,2 +1,4 @@
 
 bin/ManagedBookmarksV1.exe
+*.exe
+bin/Debug/ManagedBookmarks.exe
