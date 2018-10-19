@@ -1,2 +1,2 @@
 # ManagedBookmarks
-![Demo Image](https://raw.githubusercontent.com/spazhead/ManagedBookmarks/master/demo.png)
+![Demo Image](https://raw.githubusercontent.com/declanwoods/ManagedBookmarks/master/demo.png)
