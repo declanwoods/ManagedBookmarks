@@ -90,11 +90,14 @@ namespace ManagedBookmarks
                     if (tag.url != null)
                     {
                         // Bookmark
-                        BookmarkOutput parent = new BookmarkOutput();
-                        Debug.WriteLine(lbm[i].Text);
-                        parent.name = lbm[i].Text;
-                        parent.url = tag.url;
-                        output.Add(parent);
+                        if (!lbm[i].Text.Equals("<Empty>"))
+                        {
+                            BookmarkOutput parent = new BookmarkOutput();
+                            Debug.WriteLine(lbm[i].Text);
+                            parent.name = lbm[i].Text;
+                            parent.url = tag.url;
+                            output.Add(parent);
+                        }
                     }
                     else
                     {

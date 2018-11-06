@@ -9,3 +9,4 @@ C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBo
 C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\obj\Release\ManagedBookmarks.exe
 C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\obj\Release\ManagedBookmarks.pdb
 C:\Users\stwood\Documents\Visual Studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\obj\Release\ManagedBookmarks.Info.resources
+C:\Users\stwood\documents\visual studio 2015\Projects\ManagedBookmarks\ManagedBookmarks\obj\Release\ManagedBookmarks.csprojResolveAssemblyReference.cache
